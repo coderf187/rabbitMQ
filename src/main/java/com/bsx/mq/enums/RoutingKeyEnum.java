@@ -5,7 +5,7 @@ package com.bsx.mq.enums;
  */
 public enum RoutingKeyEnum {
     SJ_TEST("routingkey.superloan.test", "TEST"),
-    SJ_TEST_TWO("routingkey.superloan.test.two", "TEST_TWO");
+    SJ_DEV("routingkey.superloan.dev", "DEV");
 
 
     private String code;

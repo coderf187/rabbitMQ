@@ -5,7 +5,7 @@ package com.bsx.mq.enums;
  */
 public enum QueueEnum {
     SJ_TEST("queue.superloan.test", "TEST"),
-    SJ_TEST_TWO("queue.superloan.test.two", "TEST_TWO");
+    SJ_DEV("queue.superloan.dev", "DEV");
 
     private String code;
     private String name;

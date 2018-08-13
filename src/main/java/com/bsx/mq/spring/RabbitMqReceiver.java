@@ -10,12 +10,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class RabbitMqReceiver {
     @RabbitListener(queues = "queue.superloan.test")
-    public void processMessage(String content) {
-        System.out.println("test获取消息：" + content);
+    public void processTestOneMessage(String content) {
+        System.out.println("test获取消息1：" + content);
     }
 
-    @RabbitListener(queues = "queue.superloan.test.two")
-    public void processMessageTwo(String content){
-        System.out.println("test two获取消息："  + content);
+    @RabbitListener(queues = "queue.superloan.test")
+    public void processTestTwoMessage(String content) {
+        System.out.println("test获取消息2：" + content);
+    }
+
+    @RabbitListener(queues = "queue.superloan.dev")
+    public void processDevOneMessage(String content){
+        System.out.println("dev获取消息1："  + content);
+    }
+    @RabbitListener(queues = "queue.superloan.dev")
+    public void processDevTwoMessage(String content){
+        System.out.println("dev获取消息2："  + content);
     }
 }

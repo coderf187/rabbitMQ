@@ -24,13 +24,14 @@ public class RabbitTest {
 
     @Test
     public void testMsg() {
-        rabbitMqSender.sendRabbitmqDirect(ExchangeEnum.SJ_TEST.getCode(), RoutingKeyEnum.SJ_TEST.getCode(), "test msg.");
+        rabbitMqSender.sendRabbitmqDirect(ExchangeEnum.SJ_TEST.getCode(), RoutingKeyEnum.SJ_TEST.getCode(), "test exchange--test routing key.");
+        rabbitMqSender.sendRabbitmqDirect(ExchangeEnum.SJ_TEST.getCode(), RoutingKeyEnum.SJ_DEV.getCode(), "test exchange--dev routing key.");
     }
 
     @Test
     public void testQue(){
         rabbitMqSender.sendQueue(QueueEnum.SJ_TEST.getCode(),"test queue.");
-        rabbitMqSender.sendQueue(QueueEnum.SJ_TEST_TWO.getCode(),"test two queue");
+        rabbitMqSender.sendQueue(QueueEnum.SJ_DEV.getCode(),"dev queue");
     }
 
 

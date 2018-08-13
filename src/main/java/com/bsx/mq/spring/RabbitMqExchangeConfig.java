@@ -26,7 +26,9 @@ public class RabbitMqExchangeConfig {
 
 
     /**
-     * test
+     * 实例化exchange--test
+     * @param rabbitAdmin
+     * @return
      */
     @Bean
     DirectExchange sjTestExchange(RabbitAdmin rabbitAdmin) {
@@ -37,7 +39,22 @@ public class RabbitMqExchangeConfig {
     }
 
     /**
-     * 小凡test队列
+     * 实例化exchange--dev
+     * @param rabbitAdmin
+     * @return
+     */
+    @Bean
+    DirectExchange sjDevExchange(RabbitAdmin rabbitAdmin) {
+        DirectExchange contractDirectExchange = new DirectExchange(ExchangeEnum.SJ_DEV.getCode(), true, false);
+        rabbitAdmin.declareExchange(contractDirectExchange);
+        logger.debug("实例化dev交换机完成");
+        return contractDirectExchange;
+    }
+
+    /**
+     * 实例化queue--test
+     * @param rabbitAdmin
+     * @return
      */
     @Bean
     Queue sjTestQueue(RabbitAdmin rabbitAdmin) {
@@ -48,18 +65,24 @@ public class RabbitMqExchangeConfig {
     }
 
     /**
-     * 小凡test_two队列
+     * 实例化queue--dev
+     * @param rabbitAdmin
+     * @return
      */
     @Bean
-    Queue sjTestTwoQueue(RabbitAdmin rabbitAdmin) {
-        Queue queue = new Queue(QueueEnum.SJ_TEST_TWO.getCode(), false);
+    Queue sjDevQueue(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(QueueEnum.SJ_DEV.getCode(), false);
         rabbitAdmin.declareQueue(queue);
-        logger.debug("实例化test_two队列完成");
+        logger.debug("实例化dev队列完成");
         return queue;
     }
 
     /**
-     * test绑定
+     * 绑定test相关
+     * @param sjTestQueue
+     * @param sjTestExchange
+     * @param rabbitAdmin
+     * @return
      */
     @Bean
     Binding sjTestQueueExchangeBind(Queue sjTestQueue, DirectExchange sjTestExchange, RabbitAdmin rabbitAdmin) {
@@ -69,5 +92,34 @@ public class RabbitMqExchangeConfig {
         return binding;
     }
 
+    /**
+     * 绑定dev
+     * @param sjDevQueue
+     * @param sjDevExchange
+     * @param rabbitAdmin
+     * @return
+     */
+    @Bean
+    Binding sjDevQueueExchangeBind(Queue sjDevQueue, DirectExchange sjDevExchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(sjDevQueue).to(sjDevExchange).with(RoutingKeyEnum.SJ_DEV.getCode());
+        rabbitAdmin.declareBinding(binding);
+        logger.debug("dev绑定完成");
+        return binding;
+    }
+
+    /**
+     * 绑定test queue绑定dev routing
+     * @param sjTestQueue
+     * @param sjTestExchange
+     * @param rabbitAdmin
+     * @return
+     */
+    @Bean
+    Binding sjTestQueueDevRoutExchangeBind(Queue sjTestQueue, DirectExchange sjTestExchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(sjTestQueue).to(sjTestExchange).with(RoutingKeyEnum.SJ_DEV.getCode());
+        rabbitAdmin.declareBinding(binding);
+        logger.debug("test_queueAndExchange_dev_routing绑定完成");
+        return binding;
+    }
 
 }
